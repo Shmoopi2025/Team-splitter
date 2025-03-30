@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>חלוקת שחקנים לקבוצות</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .input-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+        .input-group label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .input-group input {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 20px auto;
+            display: block;
+            width: 200px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .teams-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            gap: 15px;
+        }
+        .team {
+            flex: 1;
+            padding: 15px;
+            background-color: #e9f7ef;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .team h3 {
+            margin-top: 0;
+            color: #2e7d32;
+            text-align: center;
+        }
+        .team ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .team li {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+        }
+        .team li:last-child {
+            border-bottom: none;
+        }
+        .team-total {
+            font-weight: bold;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 2px solid #2e7d32;
+            text-align: center;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+            margin: 10px 0;
+            text-align: center;
+        }
+        .success {
+            color: #2e7d32;
+            font-weight: bold;
+            margin: 10px 0;
+            text-align: center;
+        }
+        /* סגנון חדש לתצוגה הטקסטואלית */
+        .teams-text-output {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+            font-family: monospace;
+            white-space: pre;
+            overflow-x: auto;
+        }
+        .teams-text-output h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        /* סגנון חדש להגרלת המשחק הפותח */
+        .opening-game {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e3f2fd;
+            border-radius: 8px;
+            border: 1px solid #bbdefb;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .opening-game h3 {
+            margin-top: 0;
+            color: #1565c0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>חלוקת שחקנים לקבוצות</h1>
+        <p>הזן את שמות השחקנים מול המספרים המתאימים (1=הכי חזק, 18=הכי חלש):</p>
+        
+        <div class="input-grid">
+            <!-- שדות קלט לשחקנים 1-18 -->
+            <div class="input-group">
+                <label for="player1">שחקן 1:</label>
+                <input type="text" id="player1">
+            </div>
+            <div class="input-group">
+                <label for="player2">שחקן 2:</label>
+                <input type="text" id="player2">
+            </div>
+            <div class="input-group">
+                <label for="player3">שחקן 3:</label>
+                <input type="text" id="player3">
+            </div>
+            <div class="input-group">
+                <label for="player4">שחקן 4:</label>
+                <input type="text" id="player4">
+            </div>
+            <div class="input-group">
+                <label for="player5">שחקן 5:</label>
+                <input type="text" id="player5">
+            </div>
+            <div class="input-group">
+                <label for="player6">שחקן 6:</label>
+                <input type="text" id="player6">
+            </div>
+            <div class="input-group">
+                <label for="player7">שחקן 7:</label>
+                <input type="text" id="player7">
+            </div>
+            <div class="input-group">
+                <label for="player8">שחקן 8:</label>
+                <input type="text" id="player8">
+            </div>
+            <div class="input-group">
+                <label for="player9">שחקן 9:</label>
+                <input type="text" id="player9">
+            </div>
+            <div class="input-group">
+                <label for="player10">שחקן 10:</label>
+                <input type="text" id="player10">
+            </div>
+            <div class="input-group">
+                <label for="player11">שחקן 11:</label>
+                <input type="text" id="player11">
+            </div>
+            <div class="input-group">
+                <label for="player12">שחקן 12:</label>
+                <input type="text" id="player12">
+            </div>
+            <div class="input-group">
+                <label for="player13">שחקן 13:</label>
+                <input type="text" id="player13">
+            </div>
+            <div class="input-group">
+                <label for="player14">שחקן 14:</label>
+                <input type="text" id="player14">
+            </div>
+            <div class="input-group">
+                <label for="player15">שחקן 15:</label>
+                <input type="text" id="player15">
+            </div>
+            <div class="input-group">
+                <label for="player16">שחקן 16:</label>
+                <input type="text" id="player16">
+            </div>
+            <div class="input-group">
+                <label for="player17">שחקן 17:</label>
+                <input type="text" id="player17">
+            </div>
+            <div class="input-group">
+                <label for="player18">שחקן 18:</label>
+                <input type="text" id="player18">
+            </div>
+        </div>
+        
+        <button onclick="divideTeams()">חלוקה לקבוצות</button>
+        <div id="error" class="error"></div>
+        <div id="success" class="success"></div>
+        
+        <div class="teams-container" id="teamsContainer" style="display: none;">
+            <div class="team" id="team1">
+                <h3>קבוצה 1</h3>
+                <ul id="team1List"></ul>
+                <div class="team-total">סך הכל: <span id="team1Total">0</span> נקודות</div>
+            </div>
+            <div class="team" id="team2">
+                <h3>קבוצה 2</h3>
+                <ul id="team2List"></ul>
+                <div class="team-total">סך הכל: <span id="team2Total">0</span> נקודות</div>
+            </div>
+            <div class="team" id="team3">
+                <h3>קבוצה 3</h3>
+                <ul id="team3List"></ul>
+                <div class="team-total">סך הכל: <span id="team3Total">0</span> נקודות</div>
+            </div>
+        </div>
+        
+        <!-- האזור לתצוגה הטקסטואלית -->
+        <div class="teams-text-output" id="teamsTextOutput" style="display: none;">
+            <h3>רשימת הקבוצות</h3>
+            <div id="teamsTextContent"></div>
+        </div>
+        
+        <!-- האזור החדש להגרלת המשחק הפותח -->
+        <div class="opening-game" id="openingGame" style="display: none;">
+            <h3>המשחק הפותח</h3>
+            <div id="openingGameText"></div>
+        </div>
+    </div>
+
+    <script>
+        function divideTeams() {
+            // איסוף נתוני השחקנים
+            const players = [];
+            let allNamesFilled = true;
+            
+            for (let i = 1; i <= 18; i++) {
+                const input = document.getElementById(`player${i}`);
+                const name = input.value.trim();
+                
+                if (name === "") {
+                    allNamesFilled = false;
+                    break;
+                }
+                
+                players.push({
+                    rank: i,
+                    name: name
+                });
+            }
+            
+            if (!allNamesFilled) {
+                document.getElementById('error').textContent = 'אנא מלא את כל שמות השחקנים!';
+                document.getElementById('success').textContent = '';
+                document.getElementById('teamsContainer').style.display = 'none';
+                document.getElementById('teamsTextOutput').style.display = 'none';
+                document.getElementById('openingGame').style.display = 'none';
+                return;
+            }
+            
+            document.getElementById('error').textContent = '';
+            
+            let balancedTeams;
+            let attempts = 0;
+            const maxAttempts = 1000;
+            
+            do {
+                // יצירת קבוצות ראשוניות
+                const teams = [[], [], []];
+                const tiers = [0,1,2,3,4,5];
+                
+                // ערבוב הסדר של השלישיות
+                shuffleArray(tiers);
+                
+                for (const tier of tiers) {
+                    const startIdx = tier * 3;
+                    const tierPlayers = players.slice(startIdx, startIdx + 3);
+                    shuffleArray(tierPlayers);
+                    
+                    // חלוקה אקראית לקבוצות
+                    for (let i = 0; i < 3; i++) {
+                        teams[i].push(tierPlayers[i]);
+                    }
+                }
+                
+                // איזון הקבוצות
+                balancedTeams = balanceTeams(teams);
+                attempts++;
+            } while (!isPerfectlyBalanced(balancedTeams) && attempts < maxAttempts);
+            
+            if (attempts >= maxAttempts) {
+                document.getElementById('error').textContent = 'לא מצאתי חלוקה מושלמת. נא לנסות שוב.';
+                document.getElementById('success').textContent = '';
+                document.getElementById('teamsContainer').style.display = 'none';
+                document.getElementById('teamsTextOutput').style.display = 'none';
+                document.getElementById('openingGame').style.display = 'none';
+                return;
+            }
+            
+            document.getElementById('success').textContent = 'החלוקה בוצעה בהצלחה! כל הקבוצות מאוזנות עם סכום של 57 נקודות.';
+            displayTeams(balancedTeams);
+            displayTeamsText(balancedTeams);
+            drawOpeningGame(); // הוספנו את הקריאה לפונקציה החדשה
+        }
+        
+        function balanceTeams(teams) {
+            let balanced = false;
+            let iterations = 0;
+            const maxIterations = 100;
+            
+            while (!balanced && iterations < maxIterations) {
+                iterations++;
+                const sums = teams.map(team => team.reduce((sum, p) => sum + p.rank, 0));
+                
+                // מצא את הקבוצות עם הסכום הגבוה והנמוך ביותר
+                const maxIndex = sums.indexOf(Math.max(...sums));
+                const minIndex = sums.indexOf(Math.min(...sums));
+                
+                // אם הכל מאוזן, צא
+                if (sums[maxIndex] === 57 && sums[minIndex] === 57) {
+                    balanced = true;
+                    break;
+                }
+                
+                // נסה למצוא החלפה שתקרב לאיזון
+                for (let i = 0; i < teams[maxIndex].length; i++) {
+                    for (let j = 0; j < teams[minIndex].length; j++) {
+                        const playerA = teams[maxIndex][i];
+                        const playerB = teams[minIndex][j];
+                        
+                        // בדוק אם הם מאותה שכבה
+                        if (Math.floor((playerA.rank-1)/3) === Math.floor((playerB.rank-1)/3)) {
+                            // חשב את הסכומים החדשים
+                            const newSumMax = sums[maxIndex] - playerA.rank + playerB.rank;
+                            const newSumMin = sums[minIndex] - playerB.rank + playerA.rank;
+                            
+                            // אם זה משפר את האיזון
+                            if (Math.abs(newSumMax - 57) + Math.abs(newSumMin - 57) < 
+                               Math.abs(sums[maxIndex] - 57) + Math.abs(sums[minIndex] - 57)) {
+                                // בצע את ההחלפה
+                                teams[maxIndex][i] = playerB;
+                                teams[minIndex][j] = playerA;
+                                break;
+                            }
+                        }
+                    }
+                    if (balanced) break;
+                }
+            }
+            
+            return teams;
+        }
+        
+        function isPerfectlyBalanced(teams) {
+            const sums = teams.map(team => team.reduce((sum, p) => sum + p.rank, 0));
+            return sums.every(sum => sum === 57);
+        }
+        
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+        
+        function displayTeams(teams) {
+            const teamElements = [
+                document.getElementById('team1List'),
+                document.getElementById('team2List'),
+                document.getElementById('team3List')
+            ];
+            
+            const totalElements = [
+                document.getElementById('team1Total'),
+                document.getElementById('team2Total'),
+                document.getElementById('team3Total')
+            ];
+            
+            teamElements.forEach(team => team.innerHTML = '');
+            
+            for (let i = 0; i < 3; i++) {
+                let teamTotal = 0;
+                teams[i].sort((a, b) => a.rank - b.rank);
+                
+                teams[i].forEach(player => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<span>${player.name}</span> <span>(${player.rank})</span>`;
+                    teamElements[i].appendChild(li);
+                    teamTotal += player.rank;
+                });
+                
+                totalElements[i].textContent = teamTotal;
+            }
+            
+            document.getElementById('teamsContainer').style.display = 'flex';
+        }
+        
+        function displayTeamsText(teams) {
+            let outputText = '';
+            
+            for (let i = 0; i < 3; i++) {
+                // מיון השחקנים בסדר אלפביתי
+                const sortedTeam = [...teams[i]].sort((a, b) => a.name.localeCompare(b.name));
+                
+                outputText += `קבוצה ${i+1}\n`;
+                
+                // הוספת השחקנים הממוספרים
+                sortedTeam.forEach((player, index) => {
+                    outputText += `${index+1}. ${player.name}\n`;
+                });
+                
+                outputText += '\n'; // רווח בין הקבוצות
+            }
+            
+            document.getElementById('teamsTextContent').textContent = outputText;
+            document.getElementById('teamsTextOutput').style.display = 'block';
+        }
+        
+        // פונקציה חדשה להגרלת המשחק הפותח
+        function drawOpeningGame() {
+            const options = [
+                "קבוצה 1 נגד קבוצה 2",
+                "קבוצה 1 נגד קבוצה 3",
+                "קבוצה 2 נגד קבוצה 3"
+            ];
+            
+            // הגרלה אקראית של אחת האפשרויות
+            const randomIndex = Math.floor(Math.random() * options.length);
+            const selectedGame = options[randomIndex];
+            
+            document.getElementById('openingGameText').textContent = selectedGame;
+            document.getElementById('openingGame').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
